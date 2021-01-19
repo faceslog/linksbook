@@ -5,6 +5,7 @@ module.exports = (req, res, next) => {
     try
     {
         const token = req.headers.authorization.replace("Bearer ", "");
+        // Decrypt the payload
         req.userData = jwt.verify(token, JWT_SECRET);
         next();
     }

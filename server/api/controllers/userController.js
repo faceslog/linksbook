@@ -1,7 +1,8 @@
 const User = require("../models/User");
 
 exports.registerNewUser = async (req, res) => {
-    try {
+    try
+    {
         let usersWithSameCredentials = await User.find({ $or: [ { username: req.body.username }, { email: req.body.email } ] });
 
         if(usersWithSameCredentials.length >= 1)
@@ -10,19 +11,24 @@ exports.registerNewUser = async (req, res) => {
                 message: "Username or Email is already Used !"
             });
         }
-
+        // Create and save the new user
         const user = new User({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password
         });
+        await user.save();
 
-        let data = await user.save();
+        // Get the data that will be sent
+        let data = await user.getSafeData();
+
         // Generate an auth token
         const token = await user.generateAuthToken();
         // Send the data with the auth token
         res.status(201).json({ data, token });
-    } catch (err) {
+    }
+    catch (err)
+    {
         res.status(400).json({ err: err });
     }
 };
@@ -39,8 +45,8 @@ exports.loginUser = async (req, res) => {
         }
 
         const token = await user.generateAuthToken();
-        // Send only the needed data
-        let data = { username: username, email: user.email };
+        // Send only the safe data
+        let data = await user.getSafeData();
 
         res.status(201).json({ data, token });
     }
@@ -51,6 +57,7 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.getUserDetails = async (req, res) => {
+    // User data will be decrypted from the JWT payload
     await res.json(req.userData);
 };
 
@@ -65,15 +72,8 @@ exports.getUserByUsername = async (req, res) => {
             return res.status(404).json({ error: "User does not exist" });
         }
 
-        let data = {
-            username: user.username,
-            avatar: user.avatar,
-            welcomeText: user.welcomeText,
-            bgColor: user.bgColor,
-            bgImg: user.bgImg,
-            links: user.links
-        }
-        
+        let data = await user.getBasicData();
+
         res.status(200).json({ data });
     }
     catch (err)
@@ -93,5 +93,4 @@ exports.getUsers = async (req, res) => {
     {
         res.status(400).json({ err: err });
     }
-
 };

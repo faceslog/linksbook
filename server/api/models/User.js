@@ -61,23 +61,46 @@ userSchema.pre("save", async function (next) {
 // Method to generates an auth token for the user
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
-    const token = jwt.sign({ _id: user._id, username: user.username, email: user.email }, JWT_SECRET);
+    const token = jwt.sign({ _id: user._id, username: user.username, email: user.email }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
     // Unable to
     user.token = token;
     await user.save();
 
     return token;
 };
-
+// Methods that return as JSON the data that can be access by anyone and is not encrypted.
+userSchema.methods.getBasicData = async function() {
+    return {
+        username: this.username,
+        avatar: this.avatar,
+        welcomeText: this.welcomeText,
+        bgColor: this.bgColor,
+        bgImg: this.bgImg,
+        links: this.links
+    };
+};
+// Methods that return as JSON the data that is access to the dashboard or secure routes
+userSchema.methods.getSafeData = async function() {
+    return {
+        email: this.email,
+        username: this.username,
+        avatar: this.avatar,
+        welcomeText: this.welcomeText,
+        bgColor: this.bgColor,
+        bgImg: this.bgImg,
+        links: this.links
+    };
+};
 // Methods to search for a user by username and password.
 userSchema.statics.findByCredentials = async(username, password) => {
     const user = await User.findOne({ username });
 
-    if(!user) throw new Error({ error: "Invalid login details"});
-
+    // Si l'utilisateur n'existe pas
+    if(!user) return null;
     const isPasswordMatch = await bcrypt.compare(password, user.password);
 
-    if(!isPasswordMatch) throw new Error( { error:"Invalid Login Details"} );
+    // Si le mot de passe est incorrect
+    if(!isPasswordMatch) return null;
 
     return user;
 };

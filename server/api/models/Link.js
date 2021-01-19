@@ -24,5 +24,14 @@ const linkSchema = mongoose.Schema(
     }
 );
 
+// Methods to search for Links by user Id return null if nothing is found or return an array of JSON objects
+linkSchema.statics.findByUser = async(userId) => {
+    const links = await Link.find({ user: userId });
+
+    if(links.length < 1) return null;
+
+    return links;
+};
+
 const Link = mongoose.model("Link", linkSchema);
 module.exports = Link;
