@@ -12,6 +12,7 @@ const app = express();
 
 // Set Up the database
 mongoose.set("useCreateIndex", true);
+mongoose.set('useFindAndModify', false);
 mongoose
     .connect(db.database, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
