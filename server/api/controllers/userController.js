@@ -1,13 +1,13 @@
-const User = require("../model/User");
+const User = require("../models/User");
 
 exports.registerNewUser = async (req, res) => {
     try {
-        let usersWithSameEmails = await User.find({ email: req.body.email });
+        let usersWithSameCredentials = await User.find({ $or: [ { username: req.body.username }, { email: req.body.email } ] });
 
-        if(usersWithSameEmails.length >= 1)
+        if(usersWithSameCredentials.length >= 1)
         {
             return res.status(409).json({
-                message: "Email is already Used !"
+                message: "Username or Email is already Used !"
             });
         }
 
@@ -37,6 +37,7 @@ exports.loginUser = async (req, res) => {
         if (!user) {
             return res.status(401).json({ error: "Login failed! Check authentication credentials" });
         }
+
         const token = await user.generateAuthToken();
         // Send only the needed data
         let data = { username: username, email: user.email };
@@ -51,4 +52,46 @@ exports.loginUser = async (req, res) => {
 
 exports.getUserDetails = async (req, res) => {
     await res.json(req.userData);
+};
+
+exports.getUserByUsername = async (req, res) => {
+    try
+    {
+        // We look to find the User by his username
+        const user = await User.findOne({ username: req.params.username }).populate("links");
+        // If the user does not exist
+        if(!user)
+        {
+            return res.status(404).json({ error: "User does not exist" });
+        }
+
+        let data = {
+            username: user.username,
+            avatar: user.avatar,
+            welcomeText: user.welcomeText,
+            bgColor: user.bgColor,
+            bgImg: user.bgImg,
+            links: user.links
+        }
+        
+        res.status(200).json({ data });
+    }
+    catch (err)
+    {
+        res.status(400).json({ err: err });
+    }
+};
+
+exports.getUsers = async (req, res) => {
+    try
+    {
+        // We look and send all the Users
+        const user = await User.find().populate("links");
+        res.status(200).json({ user });
+    }
+    catch (err)
+    {
+        res.status(400).json({ err: err });
+    }
+
 };

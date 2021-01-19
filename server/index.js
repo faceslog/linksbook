@@ -36,8 +36,9 @@ app.get("/", (req, res) => {
     console.log(chalk.blue("Hello Someone is logging"));
 });
 
-const userRoutes = require("./api/user/route/user"); // Here goes all the routes user
-app.use("/user", userRoutes);
+const routes = require("./api/router/routes"); // Here goes all the routes user
+app.use("/api", routes);
+
 
 const PORT = process.env.PORT || 4000;
 

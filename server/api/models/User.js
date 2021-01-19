@@ -5,10 +5,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET || "hG5jFA3Jkt8TnLbBEYFMX8L";
 
 const userSchema = mongoose.Schema({
-    username: {
-        type: String,
-        required: [ true, "Please Include your username" ]
-    },
+    // Important Credentials
     email: {
         type: String,
         required: [ true, "Please Include your email" ]
@@ -17,12 +14,35 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [ true, "Please Include your password" ]
     },
-    tokens: [
+    token: {
+        type: String,
+        default: null
+    },
+    // Global Public Information
+    username: {
+        type: String,
+        required: [ true, "Please Include your username" ]
+    },
+    avatar: {
+        type: String,
+        default: "https://rohsco.rqoh.com/wp-content/uploads/sites/9/2019/09/default-profile.png"
+    },
+    welcomeText: {
+        type: String,
+        default: "Welcome to my links book"
+    },
+    bgColor: {
+        type: String,
+        default: "#070707"
+    },
+    bgImg: {
+      type: String,
+      default: null
+    },
+    links: [
         {
-            token: {
-                type: String,
-                required: true
-            }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Link"
         }
     ]
 });
@@ -42,8 +62,8 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
     const token = jwt.sign({ _id: user._id, username: user.username, email: user.email }, JWT_SECRET);
-
-    user.tokens = user.tokens.concat({ token });
+    // Unable to
+    user.token = token;
     await user.save();
 
     return token;
