@@ -3,6 +3,7 @@
 
     <!-- About the User -->
     <div class="lg:mt-12 mt-8 justify-center flex-wrap p-6 absolute w-full z-10 inset-0 mx-auto">
+
       <!-- User profile picture -->
       <section class="mx-auto lg:w-64 w-48">
         <img :src="user.avatar" class="mx-auto border-2 border-white w-36 h-36 my-10 rounded-full" alt="icon"/>
@@ -12,11 +13,11 @@
           <p class="lg:text-base text-sm tracking-wide">{{ user.welcomeText }}</p>
         </div>
       </section>
-      <!-- Grid for apps icons -->
-      <section class="px-5 md:mt-8 flex flex-wrap overflow-y-auto mt-4 justify-center">
-        <!--Metric Card-->
 
-          <div v-for="link in links" :key="link" class="w-full md:w-1/4 xl:w-1/6 p-2 cursor-pointer transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100">
+      <!-- Grid for apps icons -->
+      <section class="px-5 md:mt-8 flex flex-wrap overflow-y-auto mt-4 justify-center mb-4">
+        <!--Metric Card-->
+          <div v-for="link in links" :key="link" class="w-full md:w-2/4 xl:w-1/6 p-2 cursor-pointer transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100">
             <div class="blur-filter border-white border rounded shadow-lg p-3" v-on:click="redirect(link.goto)">
               <div class="flex flex-row">
                 <div class="flex-shrink pr-4">
@@ -28,10 +29,8 @@
               </div>
             </div>
           </div>
-
-
-
       </section>
+
     </div>
   </div>
 </template>
@@ -45,7 +44,10 @@ export default {
       user: {
         pseudo: "Jane Doe",
         avatar: "https://p.favim.com/orig/2018/07/24/tumblr-icon-girl-tumblr-girl-Favim.com-6032268.png",
-        welcomeText: '"Welcome to my links book"'
+        welcomeText: '"Welcome to my links book"',
+        bgColor:"#070707",
+        bgImg: "https://i.pinimg.com/originals/6a/50/e7/6a50e7373bf5a3619254673d8b471311.jpg"
+
       },
       links: [
         {
@@ -63,11 +65,18 @@ export default {
           goto: "https://www.youtube.com/",
           title:"My Youtube"
         }
-
       ]
     }
   },
   mounted() {
+    if(!this.user.bgImg)
+    {
+      document.body.style.backgroundColor = this.user.bgColor;
+    }
+    else
+    {
+      document.body.style.backgroundImage = `url('${this.user.bgImg}')`;
+    }
 
   },
   methods: {
