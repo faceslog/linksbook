@@ -6,6 +6,7 @@ const auth = require("../../utils/auth");
 const router = express.Router();
 // Link Controller
 router.post("/addlink", auth, linkController.registerNewLink);
+router.post("/deletelink", auth, linkController.deleteLink);
 // User Controller
 router.post("/register", userController.registerNewUser);
 router.post("/login", userController.loginUser);

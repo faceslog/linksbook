@@ -49,25 +49,38 @@ const userSchema = mongoose.Schema({
 
 // Method will hash the password before saving the user model
 userSchema.pre("save", async function (next) {
-   const user = this;
 
-   if(user.isModified("password"))
+   if(this.isModified("password"))
    {
-       user.password = await bcrypt.hash(user.password, 10);
+       this.password = await bcrypt.hash(this.password, 10);
    }
    next();
 });
 
 // Method to generates an auth token for the user
 userSchema.methods.generateAuthToken = async function() {
-    const user = this;
-    const token = jwt.sign({ _id: user._id, username: user.username, email: user.email }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
+
+    const token = jwt.sign({ _id: this._id, username: this.username, email: this.email }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
     // Unable to
-    user.token = token;
-    await user.save();
+    this.token = token;
+    await this.save();
 
     return token;
 };
+
+// Methods that return as JSON the data that can be access by anyone and is not encrypted.
+userSchema.methods.addLink = async function(link) {
+    this.links.push(link);
+    await this.save();
+};
+
+userSchema.methods.deleteLink = async function(linkId) {
+    let index = this.links.indexOf(linkId);
+    if(index <= -1) throw "This Link does not belong to this User";
+    this.links.splice(index, 1);
+    await this.save();
+};
+
 // Methods that return as JSON the data that can be access by anyone and is not encrypted.
 userSchema.methods.getBasicData = async function() {
     return {

@@ -27,10 +27,8 @@ exports.registerNewLink = async (req, res) => {
         // Check if the user exist
         const user = await User.findById(req.userData._id).populate("links");
         if(!user) return res.status(404).json({ error: "User does not exist" });
-
         // If the user exist save the link to the db
-        user.links.push(link);
-        await user.save();
+        await user.addLink(link);
 
         // Send the new link data as JSON
         res.status(201).json({ data });
@@ -39,4 +37,23 @@ exports.registerNewLink = async (req, res) => {
     {
         res.status(400).json({ err: err });
     }
+};
+
+exports.deleteLink = async (req, res) => {
+    try
+    {
+        // Check if the user exist
+        const user = await User.findById(req.userData._id);
+        if(!user) return res.status(404).json({ error: "User does not exist" });
+
+       await user.deleteLink(req.body.linkId);
+       let data = await Link.findByIdAndRemove(req.body.linkId);
+
+       res.status(200).json({ data });
+    }
+    catch (err)
+    {
+        res.status(400).json({ err: err });
+    }
+
 };
