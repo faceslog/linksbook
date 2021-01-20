@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+// Use bcrypt for data that need to never be decrypter
+const cryptsys = require("../../utils/crypto");
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "hG5jFA3Jkt8TnLbBEYFMX8L";
@@ -56,7 +57,12 @@ userSchema.pre("save", async function (next) {
 
    if(this.isModified("password"))
    {
-       this.password = await bcrypt.hash(this.password, 10);
+       this.password = await cryptsys.BCRYPT.hash(this.password);
+   }
+
+   if(this.isModified("email"))
+   {
+       this.email = cryptsys.CRYPTO.encrypt(this.email);
    }
    next();
 });
@@ -68,7 +74,7 @@ userSchema.methods.generateAuthToken = async function() {
         {
             _id: this._id,
             username: this.username,
-            email: this.email,
+            email: cryptsys.CRYPTO.decrypt(this.email),
             adminRank: this.adminRank
         }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
 
@@ -103,10 +109,11 @@ userSchema.methods.getBasicData = async function() {
         links: this.links
     };
 };
+
 // Methods that return as JSON the data that is access to the dashboard or secure routes
 userSchema.methods.getSafeData = async function() {
     return {
-        email: this.email,
+        email: cryptsys.CRYPTO.decrypt(this.email),
         adminRank: this.adminRank,
         username: this.username,
         avatar: this.avatar,
@@ -116,14 +123,14 @@ userSchema.methods.getSafeData = async function() {
         links: this.links
     };
 };
+
 // Methods to search for a user by username and password.
 userSchema.statics.findByCredentials = async(username, password) => {
     const user = await User.findOne({ username });
 
     // Si l'utilisateur n'existe pas
     if(!user) return null;
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-
+    const isPasswordMatch = await cryptsys.BCRYPT.compare(password, user.password);
     // Si le mot de passe est incorrect
     if(!isPasswordMatch) return null;
 

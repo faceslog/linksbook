@@ -1,9 +1,10 @@
 const User = require("../models/User");
+const { CRYPTO } = require("../../utils/crypto");
 
 exports.registerNewUser = async (req, res) => {
     try
     {
-        let usersWithSameCredentials = await User.find({ $or: [ { username: req.body.username }, { email: req.body.email } ] });
+        let usersWithSameCredentials = await User.find({ $or: [ { username: req.body.username }, { email: CRYPTO.encrypt(req.body.email) } ] });
 
         if(usersWithSameCredentials.length >= 1)
         {
