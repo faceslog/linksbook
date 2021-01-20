@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
         type: String,
         default: null
     },
+    adminRank:{
+      type: Number,
+      default: 0
+    },
     // Global Public Information
     username: {
         type: String,
@@ -60,7 +64,14 @@ userSchema.pre("save", async function (next) {
 // Method to generates an auth token for the user
 userSchema.methods.generateAuthToken = async function() {
 
-    const token = jwt.sign({ _id: this._id, username: this.username, email: this.email }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
+    const token = jwt.sign(
+        {
+            _id: this._id,
+            username: this.username,
+            email: this.email,
+            adminRank: this.adminRank
+        }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
+
     // Unable to
     this.token = token;
     await this.save();
@@ -96,6 +107,7 @@ userSchema.methods.getBasicData = async function() {
 userSchema.methods.getSafeData = async function() {
     return {
         email: this.email,
+        adminRank: this.adminRank,
         username: this.username,
         avatar: this.avatar,
         welcomeText: this.welcomeText,
