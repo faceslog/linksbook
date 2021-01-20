@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 // Use bcrypt for data that need to never be decrypter
-const cryptsys = require("../../utils/crypto");
+const cryptos = require("../../utils/crypto");
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "hG5jFA3Jkt8TnLbBEYFMX8L";
@@ -57,12 +57,12 @@ userSchema.pre("save", async function (next) {
 
    if(this.isModified("password"))
    {
-       this.password = await cryptsys.BCRYPT.hash(this.password);
+       this.password = await cryptos.BCRYPT.hash(this.password);
    }
 
    if(this.isModified("email"))
    {
-       this.email = cryptsys.CRYPTO.encrypt(this.email);
+       this.email = cryptos.CRYPTO.encrypt(this.email);
    }
    next();
 });
@@ -74,7 +74,7 @@ userSchema.methods.generateAuthToken = async function() {
         {
             _id: this._id,
             username: this.username,
-            email: cryptsys.CRYPTO.decrypt(this.email),
+            email: cryptos.CRYPTO.decrypt(this.email),
             adminRank: this.adminRank
         }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
 
@@ -113,7 +113,7 @@ userSchema.methods.getBasicData = async function() {
 // Methods that return as JSON the data that is access to the dashboard or secure routes
 userSchema.methods.getSafeData = async function() {
     return {
-        email: cryptsys.CRYPTO.decrypt(this.email),
+        email: cryptos.CRYPTO.decrypt(this.email),
         adminRank: this.adminRank,
         username: this.username,
         avatar: this.avatar,
@@ -130,7 +130,7 @@ userSchema.statics.findByCredentials = async(username, password) => {
 
     // Si l'utilisateur n'existe pas
     if(!user) return null;
-    const isPasswordMatch = await cryptsys.BCRYPT.compare(password, user.password);
+    const isPasswordMatch = await cryptos.BCRYPT.compare(password, user.password);
     // Si le mot de passe est incorrect
     if(!isPasswordMatch) return null;
 

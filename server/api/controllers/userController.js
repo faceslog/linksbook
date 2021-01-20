@@ -12,6 +12,11 @@ exports.registerNewUser = async (req, res) => {
                 message: "Username or Email is already Used !"
             });
         }
+
+        if(!req.body.password) return res.status(409).json({ message: "Password is not valid"});
+        console.log(req.body.password);
+        if(req.body.password.length < 8) return res.status(409).json({ message: "Password must be at least 8 length "});
+
         // Create and save the new user
         const user = new User({
             username: req.body.username,

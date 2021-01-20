@@ -30,6 +30,18 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// This check makes sure this is a JSON parsing issue, but it might be
+// coming from any middleware, not just body-parser:
+app.use((err, req, res, next) => {
+
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        //console.error(err);
+        return res.sendStatus(400); // Bad request
+    }
+
+    next();
+});
+
 app.use(morgan("dev"));
 
 // My first route
