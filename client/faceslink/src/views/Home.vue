@@ -30,7 +30,6 @@
             </div>
           </div>
       </section>
-
     </div>
   </div>
 </template>
@@ -47,7 +46,6 @@ export default {
         welcomeText: '"Welcome to my links book"',
         bgColor:"#070707",
         bgImg: "https://i.pinimg.com/originals/6a/50/e7/6a50e7373bf5a3619254673d8b471311.jpg"
-
       },
       links: [
         {
