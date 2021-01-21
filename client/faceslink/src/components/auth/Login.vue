@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4 bg-gray-100 lg:w-1/2 lg:mx-auto text-gray-500 rounded-3xl shadow-xl overflow-hidden">
+    <div class="bg-gray-100 lg:w-1/2 lg:mx-auto text-gray-500 rounded-3xl shadow-xl overflow-hidden">
       <div class="md:flex w-full">
         <img src="@/assets/img/sign.jpg" class="hidden lg:block lg:w-1/2" alt="media"/>
         <div class="lg:w-1/2 w-full py-8 md:px-5 px-8">
