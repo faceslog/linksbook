@@ -21,7 +21,7 @@
           <div class="blur-filter border-white border rounded shadow-lg p-3" v-on:click="redirect(link.goto)">
             <div class="flex flex-row">
               <div class="flex-shrink pr-4">
-                <img :src="link.img" class="rounded h-10" alt="logo"/>
+                <img :src="link.image" class="rounded h-10" alt="logo"/>
               </div>
               <div class="flex-1 pt-2">
                 <p class="font-bold tracking-wider text-sm text-white text-center">{{ link.title }}</p>
