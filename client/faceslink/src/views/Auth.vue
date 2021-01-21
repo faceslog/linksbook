@@ -41,9 +41,3 @@ export default {
   }
 }
 </script>
-
-<style>
-body{
-  background: #a9a8a8;
-}
-</style>
