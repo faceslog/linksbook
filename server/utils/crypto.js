@@ -27,8 +27,6 @@ const CRYPTO = class {
         return decrypted.toString();
     }
 
-    constructor() {};
-
 }
 
 const BCRYPT = class {

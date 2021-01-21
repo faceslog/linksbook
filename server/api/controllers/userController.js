@@ -1,9 +1,14 @@
 const User = require("../models/User");
 const { CRYPTO } = require("../../utils/crypto");
+const Validate = require("../../utils/validation");
 
 exports.registerNewUser = async (req, res) => {
     try
     {
+        if(!Validate.verifyUsername(req.body.username)) return res.status(409).json({ message: "Username is not valid"});
+        if(!Validate.verifyEmail(req.body.email)) return res.status(409).json({ message: "Email is not valid"});
+        if(!Validate.verifyPassword(req.body.password)) return res.status(409).json({ message: "Password is not valid"});
+
         let usersWithSameCredentials = await User.find({ $or: [ { username: req.body.username }, { email: CRYPTO.encrypt(req.body.email) } ] });
 
         if(usersWithSameCredentials.length >= 1)
@@ -12,9 +17,6 @@ exports.registerNewUser = async (req, res) => {
                 message: "Username or Email is already Used !"
             });
         }
-
-        if(!req.body.password) return res.status(409).json({ message: "Password is not valid"});
-        if(req.body.password.length < 8) return res.status(409).json({ message: "Password must be at least 8 length "});
 
         // Create and save the new user
         const user = new User({
@@ -41,6 +43,8 @@ exports.registerNewUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     try
     {
+        if(Validate.verifyUsername(req.body.username)) return res.status(409).json({ message: "Mmh looks like its not an username"});
+
         const username = req.body.username;
         const password = req.body.password;
         const user = await User.findByCredentials(username, password);

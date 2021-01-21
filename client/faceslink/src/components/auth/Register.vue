@@ -94,6 +94,7 @@ export default {
 
       if(!regExp.test(this.register.email))
       {
+        this.emailFeedback = "Email Invalide"
         return false;
       }
       else
