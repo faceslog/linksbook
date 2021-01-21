@@ -4,7 +4,7 @@
         <img src="@/assets/img/sign.jpg" class="hidden lg:block lg:w-1/2" alt="media"/>
         <div class="lg:w-1/2 w-full py-8 md:px-5 px-8">
           <div class="text-center md:mb-10 mb-5">
-            <h1 class="font-bold lg:text-3xl text-2xl text-gray-900 mb-3">Sign In.</h1>
+            <h1 class="font-bold lg:text-3xl text-2xl text-black mb-3">Sign In.</h1>
             <p>Sign in and get all your links to one single place</p>
           </div>
           <div>
@@ -29,7 +29,7 @@
 
             <div class="flex -mx-3 -mt-3">
               <div class="w-full px-5 md:mb-6 mb-4">
-                <button class="block w-full max-w-xs mx-auto bg-black hover:bg-gray-500 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">GO</button>
+                <button class="block w-full max-w-xs mx-auto bg-black hover:bg-gray-500 focus:bg-green-600 text-white rounded-lg px-3 py-3 font-semibold">GO</button>
               </div>
             </div>
 
