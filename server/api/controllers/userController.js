@@ -44,10 +44,7 @@ exports.loginUser = async (req, res) => {
     {
         if(!Validate.verifyUsername(req.body.username)) return res.status(409).json({ message: "Mmh looks like its not an username"});
 
-        const username = req.body.username;
-        const password = req.body.password;
-        const user = await User.findByCredentials(username, password);
-
+        const user = await User.findByCredentials(req.body.username, req.body.password);
         if (!user) {
             return res.status(401).json({ error: "Login failed! Check authentication credentials" });
         }
