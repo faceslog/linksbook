@@ -60,10 +60,6 @@ userSchema.pre("save", async function (next) {
        this.password = await cryptos.BCRYPT.hash(this.password);
    }
 
-   if(this.isModified("email"))
-   {
-       this.email = cryptos.CRYPTO.encrypt(this.email);
-   }
    next();
 });
 
@@ -74,11 +70,10 @@ userSchema.methods.generateAuthToken = async function() {
         {
             _id: this._id,
             username: this.username,
-            email: cryptos.CRYPTO.decrypt(this.email),
+            email: this.email,
             adminRank: this.adminRank
         }, JWT_SECRET, { expiresIn: 600 }); // expires in 10min
 
-    // Unable to
     this.token = token;
     await this.save();
 
@@ -113,7 +108,7 @@ userSchema.methods.getBasicData = async function() {
 // Methods that return as JSON the data that is access to the dashboard or secure routes
 userSchema.methods.getSafeData = async function() {
     return {
-        email: cryptos.CRYPTO.decrypt(this.email),
+        email: this.email,
         adminRank: this.adminRank,
         username: this.username,
         avatar: this.avatar,
