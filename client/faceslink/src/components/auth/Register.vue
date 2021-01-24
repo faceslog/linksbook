@@ -48,7 +48,7 @@
 
           <div class="flex -mx-3 -mt-3">
             <div class="w-full px-5 md:mb-6 mb-4">
-              <button @click="registerUser();" class="block w-full max-w-xs mx-auto bg-black hover:bg-gray-500 focus:bg-green-600 text-white rounded-lg px-3 py-3 font-semibold">GO</button>
+              <button @click="registerUser();" class="block w-full max-w-xs mx-auto bg-black hover:bg-green-900 focus:bg-green-600 text-white rounded-lg px-3 py-3 font-semibold">GO</button>
             </div>
           </div>
           <div class="flex justify-center">

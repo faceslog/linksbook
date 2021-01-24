@@ -1,8 +1,8 @@
 <template>
 
-    <section class="font-sans leading-normal tracking-normal select-none">
+    <section class="min-w-screen min-h-screen bg-gradient-to-r from-gray-900 to-green-900 flex items-center justify-center font-sans tracking-normal select-none">
       <!----------------------------------------------CONTAINER TO FIT WITH PARTICLES EFFECTS CAN BE IMPROVE------------------------------------------------>
-      <div class="flex items-center absolute justify-center p-3 z-10 inset-0">
+      <div class="p-3">
         <div v-if="isLoginForm">
           <login-form v-bind:is-login-form="isLoginForm" v-on:toggleForm="toggleForm($event)"></login-form>
         </div>
