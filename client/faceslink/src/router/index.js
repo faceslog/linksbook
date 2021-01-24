@@ -5,6 +5,7 @@ import Dashboard from "@/views/secure/Dashboard";
 import NotFound from "@/views/errors/404";
 import User from "@/views/User";
 
+// MAKE SURE TO CHECK ALREADY EXISTING ROUTES SERVER SIDE IN @/utils/config.js !
 const routes = [
   {
     path: '/',
