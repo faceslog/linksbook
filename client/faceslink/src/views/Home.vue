@@ -1,10 +1,17 @@
 <template>
-  <div class="text-2xl text-gray-700 font-bold">Je suis la home page :)</div>
+  <div class="font-custom min-h-screen bg-gray-500">
+    <navigation></navigation>
+  </div>
 </template>
 
 <script>
+import Navigation from "@/components/Navigation.vue"
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  components: {
+    Navigation
+  }
 }
 </script>
 

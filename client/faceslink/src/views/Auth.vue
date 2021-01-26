@@ -1,26 +1,29 @@
 <template>
 
-    <section class="min-w-screen min-h-screen bg-gradient-to-r from-gray-900 to-green-900 flex items-center justify-center font-sans tracking-normal select-none">
-      <!----------------------------------------------CONTAINER TO FIT WITH PARTICLES EFFECTS CAN BE IMPROVE------------------------------------------------>
-      <div class="p-3">
-        <div v-if="isLoginForm">
-          <login-form v-bind:is-login-form="isLoginForm" v-on:toggleForm="toggleForm($event)"></login-form>
-        </div>
-        <div v-else>
-          <register-form v-bind:is-login-form="isLoginForm" v-on:toggleForm="toggleForm($event)"></register-form>
-        </div>
+  <section class="min-w-screen min-h-screen bg-gray-500 flex items-center justify-center font-sans tracking-normal select-none">
+    <navigation></navigation>
+    <!----------------------------------------------CONTAINER TO FIT WITH PARTICLES EFFECTS CAN BE IMPROVE------------------------------------------------>
+    <div class="p-3">
+      <div v-if="isLoginForm">
+        <login-form v-bind:is-login-form="isLoginForm" v-on:toggleForm="toggleForm($event)"></login-form>
       </div>
-    </section>
+      <div v-else>
+        <register-form v-bind:is-login-form="isLoginForm" v-on:toggleForm="toggleForm($event)"></register-form>
+      </div>
+    </div>
+  </section>
 
 </template>
 
 <script>
 import LoginForm from "../components/auth/Login.vue";
 import RegisterForm from "../components/auth/Register.vue";
+import Navigation from "@/components/Navigation.vue"
 
 export default {
   name:'Sign',
   components: {
+    Navigation,
     LoginForm,
     RegisterForm
   },
