@@ -1,15 +1,14 @@
 <template>
-  <div class="bg-gray-100 lg:w-3/5 lg:mx-auto text-gray-500 rounded-3xl shadow-xl overflow-hidden">
+  <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl overflow-hidden">
     <div class="md:flex w-full">
-      <img src="@/assets/img/auth/sign.jpg" class="hidden lg:block lg:w-1/2" alt="media"/>
-      <div class="lg:w-1/2 w-full py-8 md:px-5 px-8">
+      <div class="w-full py-8 px-12">
         <div class="text-center md:mb-10 mb-5">
           <h1 class="font-bold lg:text-3xl text-2xl text-black mb-3">Sign Up.</h1>
           <p>Sign up and start managing all your links</p>
         </div>
         <div>
           <div class="-mx-3">
-            <div class="w-full px-5 mb-5">
+            <div class="w-full px-1 mb-5">
               <label class="text-xs font-semibold px-1">{{ usernameFeedback }}</label>
               <div class="flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
@@ -18,7 +17,7 @@
             </div>
           </div>
           <div class="-mx-3">
-            <div class="w-full px-5 mb-5">
+            <div class="w-full px-1 mb-5">
               <label class="text-xs font-semibold px-1">{{ emailFeedback }}</label>
               <div class="flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
@@ -27,7 +26,7 @@
             </div>
           </div>
           <div class="flex -mx-3">
-            <div class="w-full px-5 mb-5">
+            <div class="w-full px-1 mb-5">
               <label class="text-xs font-semibold px-1">{{ passwordFeedBack }}</label>
               <div class="flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
@@ -36,7 +35,7 @@
             </div>
           </div>
           <div class="flex -mx-3">
-            <div class="w-full px-5 lg:mb-10 mb-8">
+            <div class="w-full px-1 lg:mb-10 mb-8">
               <label class="text-xs font-semibold px-1">Confirm Password</label>
               <div class="flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
@@ -46,7 +45,7 @@
           </div>
 
           <div class="flex -mx-3 -mt-3">
-            <div class="w-full px-5 md:mb-6 mb-4">
+            <div class="w-full px-1 md:mb-6 mb-4">
               <button @click="registerUser();" class="block w-full max-w-xs mx-auto bg-black hover:bg-gray-500 focus:bg-green-600 text-white rounded-lg px-3 py-3 font-semibold">GO</button>
             </div>
           </div>

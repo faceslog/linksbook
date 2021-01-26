@@ -1,7 +1,6 @@
 <template>
 
   <section class="min-w-screen min-h-screen bg-gray-500 flex items-center justify-center font-sans tracking-normal select-none">
-    <navigation></navigation>
     <!----------------------------------------------CONTAINER TO FIT WITH PARTICLES EFFECTS CAN BE IMPROVE------------------------------------------------>
     <div class="p-3">
       <div v-if="isLoginForm">
@@ -18,12 +17,10 @@
 <script>
 import LoginForm from "../components/auth/Login.vue";
 import RegisterForm from "../components/auth/Register.vue";
-import Navigation from "@/components/Navigation.vue"
 
 export default {
   name:'Sign',
   components: {
-    Navigation,
     LoginForm,
     RegisterForm
   },

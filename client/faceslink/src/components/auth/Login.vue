@@ -1,8 +1,7 @@
 <template>
-    <div class="bg-gray-100 lg:w-1/2 lg:mx-auto text-gray-500 rounded-3xl shadow-xl overflow-hidden">
+    <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl overflow-hidden">
       <div class="md:flex w-full">
-        <img src="@/assets/img/auth/sign.jpg" class="hidden lg:block lg:w-1/2" alt="media"/>
-        <div class="lg:w-1/2 w-full py-8 md:px-5 px-8">
+        <div class="w-full py-8 md:px-5 px-8">
           <div class="text-center md:mb-10 mb-5">
             <h1 class="font-bold lg:text-3xl text-2xl text-black mb-3">Sign In.</h1>
             <p>Sign in and get all your links to one single place</p>
