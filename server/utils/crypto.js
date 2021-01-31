@@ -1,6 +1,7 @@
 const crypto = require("crypto")
 const bcrypt = require("bcryptjs");
 
+// Cryptos will be used to save all sensitive data in the DB that can be decrypted with the secret key
 const CRYPTO = class {
 
     // 256 bits so 32 characters MAX
@@ -29,6 +30,7 @@ const CRYPTO = class {
 
 }
 
+// Bcrypt will be used for passwords since it cannot be decrypted
 const BCRYPT = class {
 
     static ROUNDS = 10;

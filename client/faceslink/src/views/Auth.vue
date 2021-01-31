@@ -1,6 +1,6 @@
 <template>
 
-  <section class="min-w-screen min-h-screen bg-gray-500 flex items-center justify-center font-sans tracking-normal select-none">
+  <section class="min-w-screen min-h-screen bg-gray-400 flex items-center justify-center font-sans tracking-normal select-none">
     <!----------------------------------------------CONTAINER TO FIT WITH PARTICLES EFFECTS CAN BE IMPROVE------------------------------------------------>
     <div class="p-3">
       <div v-if="isLoginForm">
