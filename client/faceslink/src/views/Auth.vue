@@ -1,7 +1,7 @@
 <template>
 
-  <section class="min-w-screen min-h-screen bg-gray-400 flex items-center justify-center font-sans tracking-normal select-none">
-    <!----------------------------------------------CONTAINER TO FIT WITH PARTICLES EFFECTS CAN BE IMPROVE------------------------------------------------>
+  <section class="min-w-screen min-h-screen background flex items-center justify-center font-sans tracking-normal select-none">
+      
     <div class="p-3">
       <div v-if="isLoginForm">
         <login-form v-bind:is-login-form="isLoginForm" v-on:toggleForm="toggleForm($event)"></login-form>
@@ -41,3 +41,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+  .background {
+    background:  right 0% / 100% 100% no-repeat url("../assets/img/background/nasa.jpg");
+  }
+
+</style>
